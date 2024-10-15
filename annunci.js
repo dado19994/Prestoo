@@ -64,22 +64,25 @@ fetch('./annunci.json').then((response) => response.json()).then((data) => {
 
     showCards(data);
 
-    function filterByCategory(categoria) {
+    let radioButtons = document.querySelectorAll('.form-check-input');
+    function filterByCategory(array) {
+
+        let categoria = Array.from(radioButtons).find((button)=> button.checked).id;
+
         if (categoria != 'All') {
-            let filtered = data.filter((annuncio) => annuncio.category == categoria);
-            showCards(filtered);
+            let filtered = array.filter((annuncio) => annuncio.category == categoria);
+            return filtered;
         } else {
-            showCards(data);
+            return array;
 
         }
     }
 
 
 
-    let radioButtons = document.querySelectorAll('.form-check-input');
     radioButtons.forEach((button) => {
         button.addEventListener('click', () => {
-            filterByCategory(button.id);
+            globalFilter();
         })
     });
 
@@ -126,14 +129,14 @@ fetch('./annunci.json').then((response) => response.json()).then((data) => {
 
     setPriceInput();
 
-    function filterByPrice() {
-        let filtered = data.filter((annuncio) => +annuncio.price <= priceInput.value);
-        showCards(filtered);
+    function filterByPrice(array) {
+        let filtered = array.filter((annuncio) => +annuncio.price <= priceInput.value);
+        return filtered;
     }
 
     priceInput.addEventListener('input', () => {
         priceValue.innerHTML = priceInput.value;
-        filterByPrice()
+        globalFilter();
     });
 
 
@@ -151,11 +154,11 @@ fetch('./annunci.json').then((response) => response.json()).then((data) => {
 
     let wordInput = document.querySelector('#wordInput');
 
-    function filterByWord(parola) {
-        let filtered = data.filter((annuncio) =>
-            annuncio.name.toLowerCase().includes(parola.toLowerCase())
+    function filterByWord(array) {
+        let filtered = array.filter((annuncio) =>
+            annuncio.name.toLowerCase().includes(wordInput.value.toLowerCase())
         );
-        showCards(filtered);
+        return filtered;
     }
 
     wordInput.addEventListener('input', () => {
@@ -163,9 +166,20 @@ fetch('./annunci.json').then((response) => response.json()).then((data) => {
         if (parola === "") {
             showCards(data); // Mostra tutti gli annunci se l'input è vuoto
         } else {
-            filterByWord(parola);
+            globalFilter();
         }
     });
+
+
+    // ad ogni evento scattino tutti e tre le funzioni di filtro am non siano applicate tutti e tre sull'array data, bensi siano concatenate ed ognuna filtri il risultato della funzione di filtro precedente
+
+    function globalFilter(){
+        let filteredByCategory = filterByCategory(data);
+        let filteredByPrice = filterByPrice(filteredByCategory);
+        let filteredByWord = filterByWord(filteredByPrice);
+
+        showCards(filteredByWord);
+    }
 
 });
 

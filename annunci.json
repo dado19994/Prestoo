@@ -46,5 +46,23 @@
         "name": "Lampada da interno",
         "category": "Arredamento",
         "price": "90.50"
+    },  
+    {
+        "id": 9,
+        "name": "Scrivania",
+        "category": "Arredamento",
+        "price": "580.60"
+    },  
+    {
+        "id": 10,
+        "name": "Maglione in pile",
+        "category": "Abbigliamento",
+        "price": "190.30"
+    },  
+    {
+        "id": 11,
+        "name": "Furgone Disel 4x4",
+        "category": "Motori",
+        "price": "2000.00"
     }  
   ]
