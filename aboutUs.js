@@ -19,6 +19,9 @@ let movedDivs = document.querySelectorAll('.moved');
 
 let check = false;
 
+let flipCard = document.querySelector('.flip-card');
+
+
 opener.addEventListener('click', ()=>{
     if(check == false){
         opener.style.transform = `rotate(45deg)`;
@@ -33,17 +36,22 @@ opener.addEventListener('click', ()=>{
         movedDivs.forEach((moved, i)=>{
             moved.style.transform = `rotate(0deg) translate(0px)`;
         });
-        
+        flipCard.classList.add('d-none');
 
     }
 });
 
-let flipCard = document.querySelector('.flip-card');
+let innerFace = document.querySelector('.inner-face');
+let cardName = document.querySelector('#cardName');
+let cardDescription = document.querySelector('#cardDescription');
 
 movedDivs.forEach((moved, i)=>{
     moved.addEventListener('click', ()=>{
+        flipCard.classList.remove('d-none');
         let docente = teachers[i];
-        flipCard.style.backgroundImage = `url(${docente.url})`;
+        innerFace.style.backgroundImage = `url(${docente.url})`;
+        cardName.innerHTML = docente.name;
+        cardDescription.innerHTML = docente.description;
 
     });
 });

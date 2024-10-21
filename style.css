@@ -248,7 +248,7 @@ body{
 .inner-face{
     height: 400px;
     width: 250px;
-    background-image: url(./media/insegnante2.jpg);
+    /* background-image: url(./media/insegnante2.jpg); */
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
